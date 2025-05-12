@@ -1,0 +1,78 @@
+{
+    "sourceFile": "fonctions.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 15,
+            "patches": [
+                {
+                    "date": 1747039887938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1747040322092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n \r\n     # Génération du QR Code\r\n     qr = qrcode.make(password)\r\n     qr_path = f\"/tmp/{username}_password_qr.png\"\r\n-    qr.save(qr_path)\r\n+qr.save(\"motdepasse_qr.png\")\r\n \r\n     # Enregistrement en BDD\r\n     conn = psycopg2.connect(\r\n         dbname=\"yourdb\", user=\"user\", password=\"pass\", host=\"db\"\r\n"
+                },
+                {
+                    "date": 1747040345248,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n \r\n     # Génération du QR Code\r\n     qr = qrcode.make(password)\r\n     qr_path = f\"/tmp/{username}_password_qr.png\"\r\n-qr.save(\"motdepasse_qr.png\")\r\n+    qr.save(\"motdepasse_qr.png\")\r\n \r\n     # Enregistrement en BDD\r\n     conn = psycopg2.connect(\r\n         dbname=\"yourdb\", user=\"user\", password=\"pass\", host=\"db\"\r\n"
+                },
+                {
+                    "date": 1747040442025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,10 +20,10 @@\n     encrypted_password = cipher.encrypt(password.encode())\r\n \r\n     # Génération du QR Code\r\n     qr = qrcode.make(password)\r\n-    qr_path = f\"/tmp/{username}_password_qr.png\"\r\n-    qr.save(\"motdepasse_qr.png\")\r\n+    qr_path = f\"{username}_password_qr.png\"\r\n+    qr.save(qr_path)\r\n \r\n     # Enregistrement en BDD\r\n     conn = psycopg2.connect(\r\n         dbname=\"yourdb\", user=\"user\", password=\"pass\", host=\"db\"\r\n"
+                },
+                {
+                    "date": 1747040502255,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n     encrypted_password = cipher.encrypt(password.encode())\r\n \r\n     # Génération du QR Code\r\n     qr = qrcode.make(password)\r\n-    qr_path = f\"{username}_password_qr.png\"\r\n+    qr_path = f\"a_password_qr.png\"\r\n     qr.save(qr_path)\r\n \r\n     # Enregistrement en BDD\r\n     conn = psycopg2.connect(\r\n"
+                },
+                {
+                    "date": 1747040540745,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,12 @@\n     # Génération du QR Code\r\n     qr = qrcode.make(password)\r\n     qr_path = f\"a_password_qr.png\"\r\n     qr.save(qr_path)\r\n+    \r\n+    print(f\"QR code enregistré ici : {qr_path}\")\r\n \r\n+\r\n     # Enregistrement en BDD\r\n     conn = psycopg2.connect(\r\n         dbname=\"yourdb\", user=\"user\", password=\"pass\", host=\"db\"\r\n     )\r\n"
+                },
+                {
+                    "date": 1747040580905,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,12 +19,14 @@\n     cipher = Fernet(key)\r\n     encrypted_password = cipher.encrypt(password.encode())\r\n \r\n     # Génération du QR Code\r\n+    username = \"michel.ranu\"\r\n+    password = \"MotDePasseSuperComplexe@123\"\r\n     qr = qrcode.make(password)\r\n-    qr_path = f\"a_password_qr.png\"\r\n+    qr_path = f\"{username}_password_qr.png\"\r\n     qr.save(qr_path)\r\n-    \r\n+\r\n     print(f\"QR code enregistré ici : {qr_path}\")\r\n \r\n \r\n     # Enregistrement en BDD\r\n"
+                },
+                {
+                    "date": 1747040695766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,14 +19,12 @@\n     cipher = Fernet(key)\r\n     encrypted_password = cipher.encrypt(password.encode())\r\n \r\n     # Génération du QR Code\r\n-    username = \"michel.ranu\"\r\n-    password = \"MotDePasseSuperComplexe@123\"\r\n     qr = qrcode.make(password)\r\n-    qr_path = f\"{username}_password_qr.png\"\r\n+    qr_path = f\"a_password_qr.png\"\r\n     qr.save(qr_path)\r\n-\r\n+    \r\n     print(f\"QR code enregistré ici : {qr_path}\")\r\n \r\n \r\n     # Enregistrement en BDD\r\n"
+                },
+                {
+                    "date": 1747040725036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,14 +20,12 @@\n     encrypted_password = cipher.encrypt(password.encode())\r\n \r\n     # Génération du QR Code\r\n     qr = qrcode.make(password)\r\n-    qr_path = f\"a_password_qr.png\"\r\n+    qr_path = f\"{username}_password_qr.png\"\r\n     qr.save(qr_path)\r\n-    \r\n-    print(f\"QR code enregistré ici : {qr_path}\")\r\n \r\n-\r\n+    handle('mohamed')\r\n     # Enregistrement en BDD\r\n     conn = psycopg2.connect(\r\n         dbname=\"yourdb\", user=\"user\", password=\"pass\", host=\"db\"\r\n     )\r\n"
+                },
+                {
+                    "date": 1747040747832,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     password = generate_password()\r\n     key = Fernet.generate_key()\r\n     cipher = Fernet(key)\r\n     encrypted_password = cipher.encrypt(password.encode())\r\n-\r\n+    print(\"je suis là\")\r\n     # Génération du QR Code\r\n     qr = qrcode.make(password)\r\n     qr_path = f\"{username}_password_qr.png\"\r\n     qr.save(qr_path)\r\n"
+                },
+                {
+                    "date": 1747040804177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,9 @@\n     return ''.join(secrets.choice(chars) for _ in range(length))\r\n \r\n print (generate_password(14))\r\n \r\n-def handle(req):\r\n-    username = req.strip()\r\n+def handle(username):\r\n     password = generate_password()\r\n     key = Fernet.generate_key()\r\n     cipher = Fernet(key)\r\n     encrypted_password = cipher.encrypt(password.encode())\r\n"
+                },
+                {
+                    "date": 1747040868904,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,10 @@\n     qr = qrcode.make(password)\r\n     qr_path = f\"{username}_password_qr.png\"\r\n     qr.save(qr_path)\r\n \r\n-    handle('mohamed')\r\n+    print(f\"QR code enregistré dans : {os.path.abspath(qr_path)}\")\r\n+    return password\r\n     # Enregistrement en BDD\r\n     conn = psycopg2.connect(\r\n         dbname=\"yourdb\", user=\"user\", password=\"pass\", host=\"db\"\r\n     )\r\n"
+                },
+                {
+                    "date": 1747040893927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,10 +22,9 @@\n     qr = qrcode.make(password)\r\n     qr_path = f\"{username}_password_qr.png\"\r\n     qr.save(qr_path)\r\n \r\n-    print(f\"QR code enregistré dans : {os.path.abspath(qr_path)}\")\r\n-    return password\r\n+    handle('mohamed')\r\n     # Enregistrement en BDD\r\n     conn = psycopg2.connect(\r\n         dbname=\"yourdb\", user=\"user\", password=\"pass\", host=\"db\"\r\n     )\r\n@@ -35,5 +34,4 @@\n     conn.commit()\r\n     cur.close()\r\n     conn.close()\r\n \r\n-    return f\"Mot de passe généré pour {username} + QR enregistré\"\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747040900468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,4 +34,5 @@\n     conn.commit()\r\n     cur.close()\r\n     conn.close()\r\n \r\n+    return f\"Mot de passe généré pour {username} + QR enregistré\"\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747040950415,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,8 @@\n     qr = qrcode.make(password)\r\n     qr_path = f\"{username}_password_qr.png\"\r\n     qr.save(qr_path)\r\n \r\n-    handle('mohamed')\r\n     # Enregistrement en BDD\r\n     conn = psycopg2.connect(\r\n         dbname=\"yourdb\", user=\"user\", password=\"pass\", host=\"db\"\r\n     )\r\n@@ -34,5 +33,6 @@\n     conn.commit()\r\n     cur.close()\r\n     conn.close()\r\n \r\n-    return f\"Mot de passe généré pour {username} + QR enregistré\"\n\\ No newline at end of file\n+    return f\"Mot de passe généré pour {username} + QR enregistré\"\r\n+handle('mohamed')\r\n"
+                },
+                {
+                    "date": 1747041045081,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     password = generate_password()\r\n     key = Fernet.generate_key()\r\n     cipher = Fernet(key)\r\n     encrypted_password = cipher.encrypt(password.encode())\r\n-    print(\"je suis là\")\r\n+    print(\"password: \",password)\r\n     # Génération du QR Code\r\n     qr = qrcode.make(password)\r\n     qr_path = f\"{username}_password_qr.png\"\r\n     qr.save(qr_path)\r\n"
+                }
+            ],
+            "date": 1747039887938,
+            "name": "Commit-0",
+            "content": "import os\r\nimport qrcode\r\nimport string\r\nimport secrets\r\nfrom cryptography.fernet import Fernet\r\nfrom datetime import datetime\r\nimport psycopg2\r\n\r\ndef generate_password(length=24):\r\n    chars = string.ascii_letters + string.digits + string.punctuation\r\n    return ''.join(secrets.choice(chars) for _ in range(length))\r\n\r\nprint (generate_password(14))\r\n\r\ndef handle(req):\r\n    username = req.strip()\r\n    password = generate_password()\r\n    key = Fernet.generate_key()\r\n    cipher = Fernet(key)\r\n    encrypted_password = cipher.encrypt(password.encode())\r\n\r\n    # Génération du QR Code\r\n    qr = qrcode.make(password)\r\n    qr_path = f\"/tmp/{username}_password_qr.png\"\r\n    qr.save(qr_path)\r\n\r\n    # Enregistrement en BDD\r\n    conn = psycopg2.connect(\r\n        dbname=\"yourdb\", user=\"user\", password=\"pass\", host=\"db\"\r\n    )\r\n    cur = conn.cursor()\r\n    cur.execute(\"INSERT INTO users (username, password, gendate, expired) VALUES (%s, %s, %s, %s)\",\r\n                (username, encrypted_password, int(datetime.now().timestamp()), 0))\r\n    conn.commit()\r\n    cur.close()\r\n    conn.close()\r\n\r\n    return f\"Mot de passe généré pour {username} + QR enregistré\""
+        }
+    ]
+}
