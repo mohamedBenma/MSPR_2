@@ -1,0 +1,5 @@
+qrcode[pil]
+pyotp
+psycopg2-binary
+cryptography
+python-dotenv
