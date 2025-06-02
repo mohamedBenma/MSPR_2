@@ -1,41 +1,72 @@
-# Copyright (c) Alex Ellis 2017. All rights reserved.
-# Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-from flask import Flask, request
-from function import handler
+#!/usr/bin/env python
+from flask import Flask, request, jsonify
 from waitress import serve
 import os
 
+from function import handler
+
 app = Flask(__name__)
 
-# distutils.util.strtobool() can throw an exception
-def is_true(val):
-    return len(val) > 0 and val.lower() == "true" or val == "1"
+class Event:
+    def __init__(self):
+        self.body = request.get_data()
+        self.headers = request.headers
+        self.method = request.method
+        self.query = request.args
+        self.path = request.path
 
-@app.before_request
-def fix_transfer_encoding():
-    """
-    Sets the "wsgi.input_terminated" environment flag, thus enabling
-    Werkzeug to pass chunked requests as streams.  The gunicorn server
-    should set this, but it's not yet been implemented.
-    """
+class Context:
+    def __init__(self):
+        self.hostname = os.getenv('HOSTNAME', 'localhost')
 
-    transfer_encoding = request.headers.get("Transfer-Encoding", None)
-    if transfer_encoding == u"chunked":
-        request.environ["wsgi.input_terminated"] = True
-
-@app.route("/", defaults={"path": ""}, methods=["POST", "GET"])
-@app.route("/<path:path>", methods=["POST", "GET"])
-def main_route(path):
-    raw_body = os.getenv("RAW_BODY", "false")
-
-    as_text = True
-
-    if is_true(raw_body):
-        as_text = False
+def format_status_code(resp):
+    if 'statusCode' in resp:
+        return resp['statusCode']
     
-    ret = handler.handle(request.get_data(as_text=as_text))
-    return ret
+    return 200
+
+def format_body(resp):
+    if 'body' not in resp:
+        return ""
+    elif type(resp['body']) == dict:
+        return jsonify(resp['body'])
+    else:
+        return str(resp['body'])
+
+def format_headers(resp):
+    if 'headers' not in resp:
+        return []
+    elif type(resp['headers']) == dict:
+        headers = []
+        for key in resp['headers'].keys():
+            header_tuple = (key, resp['headers'][key])
+            headers.append(header_tuple)
+        return headers
+    
+    return resp['headers']
+
+def format_response(resp):
+    if resp == None:
+        return ('', 200)
+    
+    if type(resp) is dict:
+        statusCode = format_status_code(resp)
+        body = format_body(resp)
+        headers = format_headers(resp)
+
+        return (body, statusCode, headers)
+
+    return resp
+
+@app.route('/', defaults={'path': ''}, methods=['GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
+@app.route('/<path:path>', methods=['GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
+def call_handler(path):
+    event = Event()
+    context = Context()
+    response_data = handler.handle(event, context)
+    
+    resp = format_response(response_data)
+    return resp
 
 if __name__ == '__main__':
     serve(app, host='0.0.0.0', port=5000)
