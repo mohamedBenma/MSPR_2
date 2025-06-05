@@ -1,26 +1,26 @@
 version: 1.0
 provider:
   name: openfaas
-  gateway: http://127.0.0.1:31112
+  gateway: http://127.0.0.1:8080
 
 functions:
   gen-user:
     lang: python3-http
     handler: ./gen-user
-    image: mohamedbenmaouche09/gen-user:latest
+    image: lizaa28/gen-user:latest
     secrets:
       - fernet-key
 
   auth-user:
     lang: python3-http
     handler: ./auth-user
-    image: mohamedbenmaouche09/auth-user:latest
+    image: lizaa28/auth-user:latest
     secrets:
       - fernet-key
 
   renew-user:
     lang: python3-http
     handler: ./renew-user
-    image: mohamedbenmaouche09/renew-user:latest
+    image: lizaa28/renew-user:latest
     secrets:
       - fernet-key
