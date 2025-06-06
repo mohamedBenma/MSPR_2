@@ -1,6 +1,0 @@
-gateway:
-  cors:
-    enabled: true
-    allowOrigin: "http://localhost:5173"
-    allowMethods: "GET,POST,PUT,DELETE,OPTIONS"
-    allowHeaders: "Content-Type,Authorization"
