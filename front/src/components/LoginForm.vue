@@ -4,12 +4,12 @@
       <v-col cols="12" sm="8" md="5" lg="4">
         <v-card class="pa-8" elevation="8" rounded="xl">
           <!-- Logo -->
-          <div class="text-center mb-6">
+          <div class="text-center m3-6">
             <v-img
-              src="@/assets/lacofrap.png"
+              src="@/assets/logo.png"
               alt="Logo"
-              max-width="60"
-              class="mx-auto mb-2"
+              width="160"
+              class="mx-auto"
             />
           </div>
           <!-- Titre -->
@@ -22,7 +22,7 @@
               v-model="username"
               label="Username"
               prepend-inner-icon="mdi-account"
-              :rules="[v => !!v || 'Username is required']"
+              :rules="[(v) => !!v || 'Username is required']"
               outlined
               dense
               class="mb-3"
@@ -34,7 +34,7 @@
               label="Password"
               type="password"
               prepend-inner-icon="mdi-lock"
-              :rules="[v => !!v || 'Password is required']"
+              :rules="[(v) => !!v || 'Password is required']"
               outlined
               dense
               class="mb-3"
@@ -45,7 +45,7 @@
               v-model="code2fa"
               label="2FA code"
               prepend-inner-icon="mdi-shield-key"
-              :rules="[v => !!v || '2FA code is required']"
+              :rules="[(v) => !!v || '2FA code is required']"
               outlined
               dense
               class="mb-3"
@@ -64,8 +64,14 @@
                 />
               </v-col>
               <v-col cols="6" class="text-right">
-                <v-btn variant="text" color="primary" class="pa-0" @click="forgotPassword" :disabled="loading">
-                  Forgot password?
+                <v-btn
+                  variant="text"
+                  color="primary"
+                  class="pa-0"
+                  @click="forgotPassword"
+                  :disabled="loading"
+                >
+                  Reset password
                 </v-btn>
               </v-col>
             </v-row>
@@ -104,8 +110,15 @@
           </v-form>
           <!-- Lien vers inscription -->
           <div class="text-center mt-4">
-            <span>Don't have an account?
-              <v-btn variant="text" color="primary" class="pa-0" @click="goToRegister" :disabled="loading">
+            <span
+              >Don't have an account?
+              <v-btn
+                variant="text"
+                color="primary"
+                class="pa-0"
+                @click="goToRegister"
+                :disabled="loading"
+              >
                 Sign up
               </v-btn>
             </span>
@@ -117,82 +130,79 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
-const username = ref('')
-const password = ref('')
-const code2fa = ref('')
-const remember = ref(false)
-const errorMessage = ref('')
-const successMessage = ref('')
-const loading = ref(false)
-const formValid = ref(false)
+const username = ref("");
+const password = ref("");
+const code2fa = ref("");
+const remember = ref(false);
+const errorMessage = ref("");
+const successMessage = ref("");
+const loading = ref(false);
+const formValid = ref(false);
 
 // URL de votre gateway OpenFaaS (à adapter selon votre configuration)
 //const OPENFAAS_GATEWAY = 'http://127.0.0.1:8080' // ou votre URL réelle
 
 async function onSubmit() {
-  errorMessage.value = ''
-  successMessage.value = ''
-  loading.value = true
-  
+  errorMessage.value = "";
+  successMessage.value = "";
+  loading.value = true;
+
   try {
     // Appel à votre fonction OpenFaaS d'authentification
-    const response = await fetch('/function/auth-user', {
-      method: 'POST',
+    const response = await fetch("/function/auth-user", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username: username.value,
         password: password.value,
-        code: code2fa.value
-      })
-    })
+        code: code2fa.value,
+      }),
+    });
 
-    const data = await response.json()
-    
+    const data = await response.json();
+
     if (response.status === 200) {
       // Succès
-      successMessage.value = data.message
+      successMessage.value = data.message;
       setTimeout(() => {
-        router.push('/') // Redirection vers la page d'accueil
-      }, 1500)
-      
+        router.push("/dashboard"); // Redirection vers la page d'accueil
+      }, 1500);
+      localStorage.setItem("cofrapUsername", username.value);
     } else if (response.status === 403) {
       // Compte expiré
-      errorMessage.value = data.error + ' Souhaitez-vous renouveler vos identifiants ?'
+      errorMessage.value =
+        data.error + " Souhaitez-vous renouveler vos identifiants ?";
       // Optionnel : proposer un bouton pour aller vers la page de renouvellement
-      
     } else if (response.status === 401) {
       // Identifiants incorrects
-      errorMessage.value = data.error
-      
+      errorMessage.value = data.error;
     } else if (response.status === 404) {
       // Utilisateur introuvable
-      errorMessage.value = data.error
-      
+      errorMessage.value = data.error;
     } else {
       // Autres erreurs
-      errorMessage.value = data.error || 'Erreur lors de la connexion'
+      errorMessage.value = data.error || "Erreur lors de la connexion";
     }
-    
   } catch (error) {
-    console.error('Erreur lors de la connexion:', error)
-    errorMessage.value = 'Erreur de connexion au serveur. Veuillez réessayer.'
+    console.error("Erreur lors de la connexion:", error);
+    errorMessage.value = "Erreur de connexion au serveur. Veuillez réessayer.";
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 
 function forgotPassword() {
-  router.push('/renew') // Redirection vers page de renouvellement
+  router.push("/renew"); // Redirection vers page de renouvellement
 }
 
 function goToRegister() {
-  router.push('/register')
+  router.push("/register");
 }
 </script>

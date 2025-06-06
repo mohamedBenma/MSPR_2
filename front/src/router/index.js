@@ -3,6 +3,7 @@ import AppHome from '@/components/AppHome.vue'
 import LoginForm from '@/components/LoginForm.vue'
 import RegisterForm from '@/components/RegisterForm.vue'
 import RenewForm from '@/components/RenewForm.vue'
+import DashboardPage from'@/components/DashboardPage.vue'
 const routes = [
   
    {
@@ -26,6 +27,8 @@ const routes = [
     name: 'Renew',
     component: RenewForm
   },
+  { path: '/dashboard', name: 'Dashboard', component: DashboardPage }
+
 ]
 
 const router = createRouter({
