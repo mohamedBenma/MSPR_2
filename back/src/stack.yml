@@ -18,22 +18,20 @@ functions:
   gen-user:
     lang: python3-http
     handler: ./gen-user
-    image: lizaa28/gen-user:latest
+    image: ghcr.io/msprgroupe/gen-user:latest
     secrets:
       - fernet-key
 
   auth-user:
     lang: python3-http
     handler: ./auth-user
-    image: lizaa28/auth-user:latest
+    image: ghcr.io/msprgroupe/auth-user:latest
     secrets:
       - fernet-key
 
   renew-user:
     lang: python3-http
     handler: ./renew-user
-    image: lizaa28/renew-user:latest
+    image: ghcr.io/msprgroupe/renew-user:latest
     secrets:
       - fernet-key
-
-

@@ -1,5 +1,7 @@
 # MSPR_2
-### Backend 
+
+### Backend
+
 # 🐳 Déploiement OpenFaaS avec PostgreSQL et Adminer
 
 ## 📁 Prérequis
@@ -84,6 +86,12 @@ kubectl logs job/init-db -n openfaas-fn
 ## 🚀 Build, push & deploy des fonctions
 
 ### 8. Utiliser `faas-cli` pour déployer
+
+#### S'authentifier au package GHRC :
+
+```bash
+  echo "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" | docker login ghcr.io -u $PseudoGithub --password-stdin
+```
 
 ```bash
 faas-cli up -f stack.yml --gateway http://127.0.0.1:8080
